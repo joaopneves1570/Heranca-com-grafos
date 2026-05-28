@@ -1,4 +1,4 @@
-public class GrafoListaAdjacencia extends Grafo {
+public class GrafoMatrizAdjacencia extends Grafo {
 
     @Override
     public String toString() {

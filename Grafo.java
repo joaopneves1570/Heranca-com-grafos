@@ -48,6 +48,10 @@ abstract public class Grafo {
     }
 
     // Retorna uma representação textual do grafo
+    // graph {
+    // "A" -- "B"; -> sem peso
+    // "A" -- "C" [label="3"]; -> com peso
+    // }
     public String toString() {
 
     }
