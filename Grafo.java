@@ -1,10 +1,15 @@
 //Mateus Juares Felipe - 16891602
-//Jão Pedro Neves -
+//Jão Pedro Neves - 14713404
 
 abstract public class Grafo {
 
     protected int tamanho; // numero de arestas
     protected int ordem; // numero de vertices
+
+    public Grafo() {
+        this.tamanho = 0;
+        this.ordem = 0;
+    }
 
     // Adiciona um novo vértice ao grafo, caso ele ainda não exista.
     public abstract void adicionarVertice(String vertice);
