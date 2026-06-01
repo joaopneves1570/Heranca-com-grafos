@@ -1,3 +1,6 @@
+//Mateus Juares Felipe - 16891602
+//Jão Pedro Neves - 14713404
+
 import java.util.Scanner;
 
 public class Main {

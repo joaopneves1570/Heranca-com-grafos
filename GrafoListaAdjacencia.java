@@ -1,5 +1,5 @@
 //Mateus Juares Felipe - 16891602
-//Jão Pedro Neves -
+//Jão Pedro Neves - 14713404
 
 import java.util.Map;
 import java.util.Set;
@@ -107,12 +107,20 @@ public class GrafoListaAdjacencia extends Grafo {
         sb.append("graph {\n");
 
         for (String v1 : adjacencias.keySet()) {
+            if (grau(v1) == 0) {
+                sb.append("    \"")
+                        .append(v1)
+                        .append("\";\n");
+            }
+        }
+
+        for (String v1 : adjacencias.keySet()) {
 
             for (String v2 : adjacencias.get(v1)) {
 
                 if (v1.compareTo(v2) < 0) {
 
-                    sb.append("\"")
+                    sb.append("    \"")
                             .append(v1)
                             .append("\" -- \"")
                             .append(v2)

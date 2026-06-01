@@ -1,4 +1,8 @@
+//Mateus Juares Felipe - 16891602
+//Jão Pedro Neves - 14713404
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,10 +85,10 @@ public class GrafoMatrizAdjacencia extends Grafo {
     // Adiciona uma aresta entre dois vértices. Como o grafo é não direcionado, a
     // ligação deve ser registrada nos dois sentidos.
     public void adicionarAresta(String origem, String destino){
-        if (!existeVertice(origem) || !existeVertice(destino)) {
-            System.out.println("Um ou ambos os vértices não existem no grafo.");
-            return;
-        }
+        
+        adicionarVertice(origem);
+        adicionarVertice(destino);
+
         if (existeAresta(origem, destino)) {
             System.out.println("Aresta já existe");
             return;
@@ -169,18 +173,37 @@ public class GrafoMatrizAdjacencia extends Grafo {
         String s = "graph {\n";
 
         if (this.ordem > 0){
+            // Cria um array novo com os vértices para ordenar ele alfabéticamente
+            List<String> verticesOrdenados = new ArrayList<>();
             for (int i = 0; i < this.capacidade; i++){
-                for (int j = i; j < this.capacidade; j++){
-                    if (matrizAdjacencia[i][j] != 0 && vertices[i] != null && vertices[j] != null) {
-                        String v1 = vertices[i];
-                        String v2 = vertices[j];
-                        s += "\"" + v1 + "\"-- \"" + v2 + "\";\n";
+                if (vertices[i] != null) verticesOrdenados.add(vertices[i]);
+            }
+
+            Collections.sort(verticesOrdenados);
+
+            // Printar os vertices isolados que não se ligam com ngm mas que existem
+            for (int i = 0; i < verticesOrdenados.size(); i++) {
+
+                String v1 = verticesOrdenados.get(i);
+
+                if (grau(v1) == 0) s += "    \"" + v1 + "\";\n";
+            }
+
+            for (int i = 0; i < verticesOrdenados.size(); i++) {
+                String v1 = verticesOrdenados.get(i);
+
+                for (int j = i; j < verticesOrdenados.size(); j++) {
+                    String v2 = verticesOrdenados.get(j);
+
+                    if  (existeAresta(v1, v2)) {
+                        s += "    \"" + v1 + "\" -- \"" + v2 + "\";\n";
                     }
                 }
             }
+
         }
 
-        s += "\n}";
+        s += "}";
 
         return s;
     }

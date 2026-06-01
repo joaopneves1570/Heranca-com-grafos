@@ -1,3 +1,10 @@
+//Mateus Juares Felipe - 16891602
+//Jão Pedro Neves - 14713404
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class GrafoPonderadoMatrizAdjacencia extends GrafoMatrizAdjacencia {
 
     public GrafoPonderadoMatrizAdjacencia() {
@@ -8,10 +15,10 @@ public class GrafoPonderadoMatrizAdjacencia extends GrafoMatrizAdjacencia {
     // Adiciona uma aresta entre dois vértices. Como o grafo é não direcionado, a
     // ligação deve ser registrada nos dois sentidos.
     public void adicionarAresta(String origem, String destino, int peso){
-        if (!existeVertice(origem) || !existeVertice(destino)) {
-            System.out.println("Um ou ambos os vértices não existem no grafo.");
-            return;
-        }
+        
+        adicionarVertice(origem);
+        adicionarVertice(destino);
+
         if (existeAresta(origem, destino)) {
             System.out.println("Aresta já existe");
             return;
@@ -59,21 +66,43 @@ public class GrafoPonderadoMatrizAdjacencia extends GrafoMatrizAdjacencia {
         String s = "graph {\n";
 
         if (this.ordem > 0){
+            // Cria um array novo com os vértices para ordenar ele alfabéticamente
+            List<String> verticesOrdenados = new ArrayList<>();
             for (int i = 0; i < this.capacidade; i++){
-                for (int j = i; j < this.capacidade; j++){
-                    if (matrizAdjacencia[i][j] != 0 && vertices[i] != null && vertices[j] != null) {
-                        String v1 = vertices[i];
-                        String v2 = vertices[j];
-                        String p = String.valueOf(matrizAdjacencia[i][j]);
-                        s += "\"" + v1 + "\"-- \"" + v2 + " [label=\"" + p + "\"];\n";
+                if (vertices[i] != null) verticesOrdenados.add(vertices[i]);
+            }
+
+            Collections.sort(verticesOrdenados);
+
+            // Printar os vertices isolados que não se ligam com ngm mas que existem
+            for (int i = 0; i < verticesOrdenados.size(); i++) {
+                
+                String v1 = verticesOrdenados.get(i);
+
+                if (grau(v1) == 0) s += "    \"" + v1 + "\";\n";
+            }
+
+            for (int i = 0; i < verticesOrdenados.size(); i++) {
+                String v1 = verticesOrdenados.get(i);
+                
+                for (int j = i; j < verticesOrdenados.size(); j++) {
+                    String v2 = verticesOrdenados.get(j);
+
+                    if (existeAresta(v1, v2)) {
+                        int indice1 = mapaVertices.get(v1);
+                        int indice2 = mapaVertices.get(v2);
+                        String p = String.valueOf(matrizAdjacencia[indice1][indice2]);
+                        s += "    \"" + v1 + "\" -- \"" + v2 + "\" [label=\"" + p + "\"];\n";
                     }
                 }
             }
+
         }
 
-        s += "\n}";
+        s += "}";
 
         return s;
     }
+
 
 }
